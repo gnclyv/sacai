@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Güzgü — Saç Modelin süni zəka ilə</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Sora:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="grain"></div>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark">◐</span>
+    <span class="brand-word">Güzgü</span>
+  </div>
+  <span class="topbar-tag">süni zəka stilisti</span>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="hero-copy">
+      <p class="eyebrow">Şəkil yüklə — üz formanı oxuyaq</p>
+      <h1>Güzgüyə bax,<br>sənə <em>yaraşanı</em> tap.</h1>
+      <p class="lede">Bir şəkil yüklə, süni zəka üz formanı analiz etsin və sənə uyğun 4 saç modelini,
+      niyə yaraşdığını izah edərək təklif etsin.</p>
+
+      <form id="analyze-form" class="controls">
+        <div class="field-row">
+          <label class="field">
+            <span>Saç tipi</span>
+            <select name="hairType" id="hairType">
+              <option value="">Seçilməyib</option>
+              <option value="düz">Düz</option>
+              <option value="dalğalı">Dalğalı</option>
+              <option value="qıvrım">Qıvrım</option>
+              <option value="kətan qıvrım">Sıx qıvrım (kətan)</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>İstədiyin uzunluq</span>
+            <select name="lengthPreference" id="lengthPreference">
+              <option value="">Fərq etməz</option>
+              <option value="qısa">Qısa</option>
+              <option value="orta">Orta</option>
+              <option value="uzun">Uzun</option>
+            </select>
+          </label>
+        </div>
+        <button type="button" id="analyze-btn" class="btn-primary" disabled>
+          <span id="analyze-btn-text">Əvvəlcə şəkil yüklə</span>
+        </button>
+      </form>
+
+      <p class="hint">Şəkil serverə göndərilir, süni zəka ilə analiz olunur.</p>
+    </div>
+
+    <div class="mirror-stage">
+      <div class="mirror-frame" id="mirror-frame">
+        <div class="mirror-glass" id="dropzone">
+          <img id="preview-img" alt="" />
+          <div class="mirror-placeholder" id="mirror-placeholder">
+            <span class="mirror-icon">✧</span>
+            <p>Şəkli bura sürüklə<br>və ya klikləyib seç</p>
+          </div>
+          <div class="scan-line" id="scan-line"></div>
+        </div>
+        <input type="file" id="file-input" accept="image/png, image/jpeg, image/webp" hidden />
+      </div>
+      <p class="mirror-caption" id="mirror-caption">güzgü boşdur</p>
+    </div>
+  </section>
+
+  <section class="results" id="results" hidden>
+    <div class="results-head">
+      <p class="eyebrow">Nəticə</p>
+      <h2 id="face-shape-title">—</h2>
+      <p id="face-shape-note" class="lede"></p>
+    </div>
+    <div class="cards" id="cards"></div>
+  </section>
+
+  <section class="history" id="history-section" hidden>
+    <p class="eyebrow">Bu sessiyada əvvəlki nəticələr</p>
+    <div class="history-list" id="history-list"></div>
+  </section>
+</main>
+
+<footer class="footer">
+  <span>Nihad Gəncəliyev tərəfindən yaradılmışdır.</span>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
