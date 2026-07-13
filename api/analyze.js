@@ -1,5 +1,5 @@
 const crypto = require('crypto');
-const { analyzeFaceAndSuggest } = require('../lib/grok');
+const { analyzeFaceAndSuggest } = require('../lib/gemini');
 const { getPool } = require('../lib/db');
 
 module.exports = async (req, res) => {
