@@ -17,6 +17,9 @@ const SESSION_KEY = 'hairstyle_ai_session_id';
 let sessionId = localStorage.getItem(SESSION_KEY);
 let currentImage = null; // { base64, mediaType }
 
+// Vercel-dəki Backend-in tam linkini bura qeyd edirik
+const API_BASE_URL = 'https://sacai-gamma.vercel.app';
+
 function getSessionId() {
   if (!sessionId) {
     sessionId = crypto.randomUUID();
@@ -83,7 +86,8 @@ analyzeBtn.addEventListener('click', async () => {
   mirrorCaption.textContent = 'süni zəka baxır…';
 
   try {
-    const res = await fetch('/api/analyze', {
+    // DOĞRU: Vercel linki + endpoint istifadə olunur
+    const res = await fetch(`${API_BASE_URL}/api/analyze`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -135,7 +139,8 @@ function renderResults(data) {
 
 async function loadHistory() {
   try {
-    const res = await fetch(`/api/history/${getSessionId()}`);
+    // DOĞRU: Vercel linki ilə tarixçəyə müraciət
+    const res = await fetch(`${API_BASE_URL}/api/history/${getSessionId()}`);
     if (!res.ok) return;
     const rows = await res.json();
     if (!rows.length) return;
@@ -146,11 +151,15 @@ async function loadHistory() {
       const div = document.createElement('div');
       div.className = 'history-item';
       const date = new Date(row.created_at).toLocaleString('az-AZ');
+      
+      // Əgər Cloudinary URL varsa, kiçik bir şəkil ikonası/mətn göstərə bilərik. 
+      // Sadəlik üçün əvvəlki strukturunu saxladım.
       div.innerHTML = `<strong>${escapeHtml(row.face_shape)}</strong><span>${date}</span>`;
       historyList.appendChild(div);
     });
   } catch (err) {
     // sessiz uğursuzluq - tarixçə vacib deyil
+    console.error('Tarixçə yüklənərkən xəta:', err);
   }
 }
 
