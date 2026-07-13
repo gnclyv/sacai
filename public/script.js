@@ -135,7 +135,7 @@ function renderResults(data) {
 
 async function loadHistory() {
   try {
-    const res = await fetch(`/api/history/${getSessionId()}`);
+    const res = await fetch(`/api/history?sessionId=${encodeURIComponent(getSessionId())}`);
     if (!res.ok) return;
     const rows = await res.json();
     if (!rows.length) return;

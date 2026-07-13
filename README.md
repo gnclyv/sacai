@@ -47,17 +47,37 @@ Sayt `http://localhost:3000` ünvanında açılacaq.
 ## Layihə strukturu
 ```
 hairstyle-ai/
-├── server.js            # Express server + Claude API + Neon inteqrasiyası
+├── server.js             # Lokal inkişaf üçün Express server (npm start)
+├── vercel.json            # Vercel funksiya konfiqurasiyası
+├── lib/
+│   ├── grok.js              # xAI Grok API çağırışı (server.js və api/ tərəfindən paylaşılır)
+│   └── db.js                 # Neon Postgres bağlantı hovuzu
+├── api/                    # Vercel serverless funksiyaları (production-da bunlar işləyir)
+│   ├── analyze.js
+│   ├── history.js
+│   └── health.js
 ├── db/
-│   ├── schema.sql        # Postgres cədvəl sxemi
-│   └── init.js            # Sxemi Neon bazasında yaratmaq üçün skript
+│   ├── schema.sql
+│   └── init.js
 ├── public/
-│   ├── index.html         # Sayfa strukturu
-│   ├── style.css           # Dizayn ("Güzgü" atelye konsepti)
-│   └── script.js            # Yükləmə, API çağırışları, nəticə render
+│   ├── index.html
+│   ├── style.css
+│   └── script.js
 ├── .env.example
 └── package.json
 ```
+
+## Vercel-də deploy etmək
+Bu layihə "sıfır-konfiqurasiya" formatındadır: `/public` statik fayllar kimi, `/api` isə serverless funksiyalar kimi avtomatik tanınır.
+
+1. Layihəni GitHub-a yüklə (və ya Vercel CLI ilə `vercel` əmrini birbaşa qovluqda işlət).
+2. [vercel.com](https://vercel.com) üzərindən layihəni import et.
+3. **Project Settings → Environment Variables** bölməsində bunları əlavə et:
+   - `XAI_API_KEY`
+   - `DATABASE_URL` — **vacib:** Neon-un "Pooled connection" (host adında `-pooler` olan) setirini istifadə et, çünki serverless funksiyalar hər sorğuda yeni bağlantı aça bilər və Neon-un adi bağlantı limiti tez dolur.
+4. Deploy et. Bir neçə saniyə sonra sayt `https://layihə-adi.vercel.app` ünvanında açılacaq.
+
+**Qeyd:** `server.js` yalnız lokal test üçündür (`npm start`), Vercel-də istifadə olunmur — orada `/api` qovluğundakı fayllar avtomatik işə düşür.
 
 ## Necə işləyir
 1. İstifadəçi güzgü-formalı çərçivəyə şəkil yükləyir (sürükləyib buraxma və ya klikləmə ilə).
